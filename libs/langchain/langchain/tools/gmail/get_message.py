@@ -48,7 +48,7 @@ class GmailGetMessage(GmailBaseTool):
             for encoding in encodings_to_try:
                 try:
                     return payload.decode(encoding)
-                except Exception:
+                except UnicodeDecodeError:
                     pass
 
             # Default to utf-8 with replacement for unknown characters
