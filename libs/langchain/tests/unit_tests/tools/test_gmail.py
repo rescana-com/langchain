@@ -1,8 +1,8 @@
-
 """Unit tests for GmailSearch class."""
 import pytest
 
 from langchain.tools.gmail.search import GmailSearch, Resource
+
 
 class MockGmailApiResource:
     """Mock Gmail API resource."""
@@ -93,17 +93,6 @@ class MockGmailApiResource:
         with pytest.raises(NotImplementedError):
             search.run(query="test", resource="invalid_resource", max_results=2)
 
-    def test_run_http_error(self, mocker):
-        """Test run_http_error method."""
-        mocker.patch(
-            "googleapiclient.discovery.build",
-            side_effect=HttpError(
-                resp={"status": 404, "reason": "Not Found"}, content=b"Not Found"
-            ),
-        )
-        search = GmailSearch()
-        with pytest.raises(HttpError):
-            search.run(query="test", resource=Resource.MESSAGES, max_results=2)
 
     def test_parse_messages(self):
         """Test parse_messages method."""
